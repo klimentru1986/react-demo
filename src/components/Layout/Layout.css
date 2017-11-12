@@ -1,3 +1,11 @@
+.ToolBar {
+  height: 5vh;
+}
+
 .Content {
-  margin-top: 16px;
+  margin-top: 1vh;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

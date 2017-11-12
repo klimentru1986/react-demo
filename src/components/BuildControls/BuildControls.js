@@ -9,6 +9,9 @@ import BuildControl from './BuildControl/BuildControl';
 const buildControls = props => {
   return (
     <div className={classes.BuildControls}>
+      <p>
+        Цена <strong>{props.price.toFixed(2)}</strong> Р
+      </p>
       {controlsList.map(control => {
         return (
           <BuildControl
@@ -26,6 +29,7 @@ const buildControls = props => {
 };
 
 buildControls.propTypes = {
+  price: PropTypes.number.isRequired,
   addIngredient: PropTypes.func.isRequired,
   removeIngredient: PropTypes.func.isRequired,
   disabledInfo: PropTypes.object.isRequired

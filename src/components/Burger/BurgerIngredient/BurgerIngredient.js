@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { ingredientsList } from './ingredients.const';
+import { ingredientsList } from '../../../constants/ingredients.const';
 
 import classes from './BurgerIngredient.css';
 

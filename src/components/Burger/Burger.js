@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './Burger.css';
 
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
-import { ingredientsList } from './BurgerIngredient/ingredients.const';
+import { ingredientsList } from '../../constants/ingredients.const';
 
 const burger = props => {
   let transformedIngredients = Object.keys(props.ingredients)
@@ -17,7 +17,6 @@ const burger = props => {
   if (!transformedIngredients.length) {
     transformedIngredients = <p>Добавьте ингридиенты!</p>;
   }
-  console.log(transformedIngredients);
 
   return (
     <div className={classes.Burger}>

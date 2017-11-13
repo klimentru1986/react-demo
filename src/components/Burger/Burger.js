@@ -5,6 +5,7 @@ import classes from './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import { ingredientsList } from '../../constants/ingredients.const';
 
+/** Компонент бургера */
 const burger = props => {
   let transformedIngredients = Object.keys(props.ingredients)
     .map(igKey => {
@@ -14,6 +15,7 @@ const burger = props => {
     })
     .reduce((arr, el) => arr.concat(el), []);
 
+  /** Если нет ингредиентов */
   if (!transformedIngredients.length) {
     transformedIngredients = <p>Добавьте ингридиенты!</p>;
   }

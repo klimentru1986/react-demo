@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from './BuildControl.css';
 
+/** Компонент контрола формы заказа */
 const buildControl = props => {
   return (
     <div className={classes.BuildControl}>

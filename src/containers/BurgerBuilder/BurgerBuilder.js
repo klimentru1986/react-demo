@@ -6,6 +6,7 @@ import BuildControls from '../../components/BuildControls/BuildControls';
 
 import { ingredientsPrice, ingredientsHanglerTypes } from '../../constants/ingredients.const';
 
+/** Контейнер сборки и заказа бургера */
 class BurgerBuilder extends Component {
   state = {
     ingredients: {
@@ -14,15 +15,27 @@ class BurgerBuilder extends Component {
       salad: 0,
       bacon: 0
     },
-    price: 100
+    price: 100,
+    purchasable: false
   };
 
+  /** Проверка обновления состояния заказа */
+  _updatePurchase(ingredients) {
+    const ingredientsKeys = Object.keys(ingredients);
+
+    const purchase = ingredientsKeys.map(i => ingredients[i]).reduce((sum, i) => sum + i, 0);
+
+    this.setState({ purchasable: purchase > 0 });
+  }
+
+  /** Обновление состояния выбраного ингридиента и цены */
   _updateBurgerState = (handlerType, ingredientType) => {
     const oldCount = this.state.ingredients[ingredientType];
 
     let count, updatedPrice;
     const additionalPrice = ingredientsPrice[ingredientType];
 
+    /** Уменьшение */
     if (handlerType === ingredientsHanglerTypes.remove) {
       count = oldCount - 1;
       updatedPrice = this.state.price - additionalPrice;
@@ -32,6 +45,7 @@ class BurgerBuilder extends Component {
       return;
     }
 
+    /** Увеличение */
     if (handlerType === ingredientsHanglerTypes.add) {
       count = oldCount + 1;
       updatedPrice = this.state.price + additionalPrice;
@@ -40,13 +54,17 @@ class BurgerBuilder extends Component {
     const updatedIngredients = { ...this.state.ingredients };
     updatedIngredients[ingredientType] = count;
 
+    /** Обновление состояние */
     this.setState({ ingredients: updatedIngredients, price: updatedPrice });
+    this._updatePurchase(updatedIngredients);
   };
 
+  /** Добавление ингридиента */
   addIngredientHandler = type => {
     this._updateBurgerState(ingredientsHanglerTypes.add, type);
   };
 
+  /** Вычитание ингридиента */
   removeIngredientHandler = type => {
     this._updateBurgerState(ingredientsHanglerTypes.remove, type);
   };
@@ -56,6 +74,7 @@ class BurgerBuilder extends Component {
       ...this.state.ingredients
     };
 
+    /** Список заблокированых ингредиентов */
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
@@ -66,6 +85,7 @@ class BurgerBuilder extends Component {
         <BuildControls
           price={this.state.price}
           disabledInfo={disabledInfo}
+          purchasable={this.state.purchasable}
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.removeIngredientHandler}
         />

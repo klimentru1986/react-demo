@@ -6,6 +6,7 @@ import classes from './BuildControls.css';
 import { controlsList } from '../../constants/controls.const';
 import BuildControl from './BuildControl/BuildControl';
 
+/** Компонент формы для заказа бургера */
 const buildControls = props => {
   return (
     <div className={classes.BuildControls}>
@@ -24,15 +25,19 @@ const buildControls = props => {
           />
         );
       })}
+      <button className={classes.OrderButton} disabled={!props.purchasable}>
+        ЗАКАЗАТЬ
+      </button>
     </div>
   );
 };
 
 buildControls.propTypes = {
   price: PropTypes.number.isRequired,
+  disabledInfo: PropTypes.object.isRequired,
+  purchasable: PropTypes.bool.isRequired,
   addIngredient: PropTypes.func.isRequired,
-  removeIngredient: PropTypes.func.isRequired,
-  disabledInfo: PropTypes.object.isRequired
+  removeIngredient: PropTypes.func.isRequired
 };
 
 export default buildControls;

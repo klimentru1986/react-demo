@@ -28,7 +28,9 @@ class BurgerBuilder extends Component {
 
     const purchase = ingredientsKeys.map(i => ingredients[i]).reduce((sum, i) => sum + i, 0);
 
-    this.setState({ purchasable: purchase > 0 });
+    this.setState({
+      purchasable: purchase > 0
+    });
   }
 
   /** Обновление состояния выбраного ингридиента и цены */
@@ -54,11 +56,16 @@ class BurgerBuilder extends Component {
       updatedPrice = this.state.price + additionalPrice;
     }
 
-    const updatedIngredients = { ...this.state.ingredients };
+    const updatedIngredients = {
+      ...this.state.ingredients
+    };
     updatedIngredients[ingredientType] = count;
 
     /** Обновление состояние */
-    this.setState({ ingredients: updatedIngredients, price: updatedPrice });
+    this.setState({
+      ingredients: updatedIngredients,
+      price: updatedPrice
+    });
     this._updatePurchase(updatedIngredients);
   };
 
@@ -74,7 +81,16 @@ class BurgerBuilder extends Component {
 
   /** Показывает модальное окно */
   purchasingHandler = () => {
-    this.setState({ purchasing: true });
+    this.setState({
+      purchasing: true
+    });
+  };
+
+  /** Скрывает модальное окно */
+  purchaseCancelHandler = () => {
+    this.setState({
+      purchasing: false
+    });
   };
 
   render() {
@@ -89,7 +105,7 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal show={this.state.purchasing}>
+        <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <Burger ingredients={this.state.ingredients} />

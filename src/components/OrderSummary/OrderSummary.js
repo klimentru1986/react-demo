@@ -6,13 +6,15 @@ import Aux from '../../hoc/Aux/Aux';
 import { ingredientsNamesRu } from '../../constants/ingredients.const';
 
 const orderSummary = props => {
-  const ingredientSummary = Object.keys(props.ingredients).map(key => {
-    return (
-      <li key={key}>
-        <span>{ingredientsNamesRu[key]}</span>: {props.ingredients[key]}
-      </li>
-    );
-  });
+  const ingredientSummary = Object.keys(props.ingredients)
+    .filter(key => props.ingredients[key] !== 0)
+    .map(key => {
+      return (
+        <li key={key}>
+          <span>{ingredientsNamesRu[key]}</span>: {props.ingredients[key]}
+        </li>
+      );
+    });
 
   return (
     <Aux>

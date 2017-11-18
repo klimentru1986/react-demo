@@ -23,6 +23,9 @@ const orderSummary = props => {
       <h3>Ваш заказ</h3>
       <p>Вкуснейший бургер со следующими ингридиентами:</p>
       <ul>{ingredientSummary}</ul>
+      <p>
+        <strong>Цена: {props.price.toFixed(2)}</strong>
+      </p>
       <Button btnType={btnTypes.danger} clicked={props.purchaseCancel}>
         Отмена
       </Button>
@@ -34,7 +37,8 @@ const orderSummary = props => {
 };
 
 orderSummary.propTypes = {
-  ingredients: PropTypes.object.isRequired
+  ingredients: PropTypes.object.isRequired,
+  price: PropTypes.number.isRequired
 };
 
 export default orderSummary;

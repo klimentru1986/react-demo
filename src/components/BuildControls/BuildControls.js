@@ -10,7 +10,7 @@ import BuildControl from './BuildControl/BuildControl';
 const buildControls = props => {
   return (
     <div className={classes.BuildControls}>
-      <p>
+      <p className={classes.Price}>
         Цена <strong>{props.price.toFixed(2)}</strong> Р
       </p>
       {controlsList.map(control => {

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 import { ingredientsPrice, ingredientsHanglerTypes } from '../../constants/ingredients.const';
 
@@ -16,7 +18,8 @@ class BurgerBuilder extends Component {
       bacon: 0
     },
     price: 100,
-    purchasable: false
+    purchasable: false,
+    purchasing: false
   };
 
   /** Проверка обновления состояния заказа */
@@ -69,6 +72,11 @@ class BurgerBuilder extends Component {
     this._updateBurgerState(ingredientsHanglerTypes.remove, type);
   };
 
+  /** Показывает модальное окно */
+  purchasingHandler = () => {
+    this.setState({ purchasing: true });
+  };
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -81,11 +89,15 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
+        <Modal show={this.state.purchasing}>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           price={this.state.price}
           disabledInfo={disabledInfo}
           purchasable={this.state.purchasable}
+          ordered={this.purchasingHandler}
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.removeIngredientHandler}
         />

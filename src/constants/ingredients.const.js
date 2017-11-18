@@ -18,3 +18,10 @@ export const ingredientsHanglerTypes = {
   add: 'add',
   remove: 'remove'
 };
+
+export const ingredientsNamesRu = {
+  meat: 'Мясо',
+  cheese: 'Сыр',
+  salad: 'Салат',
+  bacon: 'Бекон'
+};

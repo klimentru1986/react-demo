@@ -86,6 +86,11 @@ class BurgerBuilder extends Component {
     });
   };
 
+  /** Продолжение заказа */
+  purchaseContinueHandler = () => {
+    alert('продолжить заказ');
+  };
+
   /** Скрывает модальное окно */
   purchaseCancelHandler = () => {
     this.setState({
@@ -106,7 +111,11 @@ class BurgerBuilder extends Component {
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
-          <OrderSummary ingredients={this.state.ingredients} />
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            purchaseCancel={this.purchaseCancelHandler}
+            purchaseContinue={this.purchaseContinueHandler}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls

@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Aux from '../../hoc/Aux/Aux';
+import Button from './../UI/Button/Button';
 
 import { ingredientsNamesRu } from '../../constants/ingredients.const';
+import { btnTypes } from '../../constants/btnTypes.const';
 
 const orderSummary = props => {
   const ingredientSummary = Object.keys(props.ingredients)
@@ -21,7 +23,12 @@ const orderSummary = props => {
       <h3>Ваш заказ</h3>
       <p>Вкуснейший бургер со следующими ингридиентами:</p>
       <ul>{ingredientSummary}</ul>
-      <p>Продолжить?</p>
+      <Button btnType={btnTypes.danger} clicked={props.purchaseCancel}>
+        Отмена
+      </Button>
+      <Button btnType={btnTypes.success} clicked={props.purchaseContinue}>
+        Продолжить
+      </Button>
     </Aux>
   );
 };

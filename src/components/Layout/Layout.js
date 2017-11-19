@@ -12,16 +12,18 @@ class Layout extends Component {
     showSideDrawer: false
   };
 
-  /** Закрытие мобильного меню */
-  closeSideDrawerHandler = () => {
-    this.setState({ showSideDrawer: false });
+  /** Открытие/закрытие мобильного меню */
+  toggleSideDrawerHandler = () => {
+    this.setState(prevState => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
   };
 
   render() {
     return (
       <Aux>
-        <Toolbar />
-        <SideDrawer show={this.state.showSideDrawer} close={this.closeSideDrawerHandler} />
+        <Toolbar toggleSideDrawer={this.toggleSideDrawerHandler} />
+        <SideDrawer show={this.state.showSideDrawer} close={this.toggleSideDrawerHandler} />
         <main className={classes.Content}>{this.props.children}</main>
       </Aux>
     );

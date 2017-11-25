@@ -5,8 +5,11 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import { ingredientsPrice, ingredientsHanglerTypes } from '../../constants/ingredients.const';
+
+import axios from '../../axios-order';
 
 /** Контейнер сборки и заказа бургера */
 class BurgerBuilder extends Component {
@@ -19,7 +22,8 @@ class BurgerBuilder extends Component {
     },
     price: 100,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
+    loading: false
   };
 
   /** Проверка обновления состояния заказа */
@@ -88,7 +92,34 @@ class BurgerBuilder extends Component {
 
   /** Продолжение заказа */
   purchaseContinueHandler = () => {
-    alert('продолжить заказ');
+    this.setState({
+      loading: true
+    });
+
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.price,
+      deliveryMethod: 'fastest',
+      customer: {
+        name: 'TestUser',
+        email: 'testUser@test.test',
+        address: {
+          street: 'test street',
+          zipCode: '123456',
+          country: 'ru'
+        }
+      }
+    };
+    axios
+      .post('/orders.json', order)
+      .then(response => {
+        this.setState({ loading: false, purchasing: false });
+        console.log(response);
+      })
+      .catch(error => {
+        this.setState({ loading: false, purchasing: false });
+        console.error(error);
+      });
   };
 
   /** Скрывает модальное окно */
@@ -108,15 +139,23 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
 
+    let orderSummary = (
+      <OrderSummary
+        ingredients={this.state.ingredients}
+        price={this.state.price}
+        purchaseCancel={this.purchaseCancelHandler}
+        purchaseContinue={this.purchaseContinueHandler}
+      />
+    );
+
+    if (this.state.loading) {
+      orderSummary = <Spinner />;
+    }
+
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
-          <OrderSummary
-            ingredients={this.state.ingredients}
-            price={this.state.price}
-            purchaseCancel={this.purchaseCancelHandler}
-            purchaseContinue={this.purchaseContinueHandler}
-          />
+          {orderSummary}
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls

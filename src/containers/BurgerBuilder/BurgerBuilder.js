@@ -16,7 +16,7 @@ import axios from '../../axios-order';
 class BurgerBuilder extends Component {
   state = {
     ingredients: null,
-    price: 150,
+    price: 50,
     purchasable: false,
     purchasing: false,
     loading: false,
